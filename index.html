@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>
+                <span class="rock">The Rock</span>,
+                <span class="paper">paper</span>,
+                <span class="scissors">scissors
+                    <span class="shoot">, shoot</span>
+            </h1>
+        </div>
+    </header>
+    <div class="main">
+        <div class="container">
+            <section class="content">
+                <button class="play rock" type="button" onclick="play('rock')"></button>
+                <button class="play paper" type="button" onclick="play('paper')"></button>
+                <button class="play scissors" type="button" onclick="play('scissors')"></button>
+                <div style="clear:both;"></div>
+                <p>
+                    <span id="player"></span>
+                    <span id="opponent"></span>
+                </p>
+                <h2 id="results"></h2>
+            </section>
+            <aside class="aside">
+                <div class="scorebox">
+                    <h2>Score</h2>
+                    <div class="score-num">
+                        <span id="wins">0</span>
+                        <br />wins</div>
+                    <div class="score-divider">
+                        <span>-</span>
+                    </div>
+                    <div class="score-num">
+                        <span id="loses">0</span>
+                        <br />loses</div>
+                </div>
+                <button type="reset" id="reset" onclick="reset()">reset scores</button>
+            </aside>
+        </div>
+    </div>
+
+    <script>
+        var loses = 0;
+        var wins = 0;
+
+        var play = function (userChoice) {
+
+            document.getElementById("player").innerHTML = "";
+            document.getElementById("opponent").innerHTML = "";
+            document.getElementById("results").innerHTML = "";
+
+
+            if (userChoice == "rock" || userChoice == "paper" || userChoice == "scissors") {
+                document.getElementById("player").innerHTML = 'You chose' + ' ' + userChoice + '.';
+            } else if (userChoice == "rope") {
+                document.getElementById("player").innerHTML = 'You chose' + ' ' + userChoice + '. <br />Well aren\'t you a smarty pants.';
+            } else {
+                document.getElementById("player").innerHTML = "That is not a valid choice, try again.";
+
+                return false;
+            }
+
+            var computerChoice = Math.random();
+            if (computerChoice < 0.34) {
+                computerChoice = "rock";
+            } else if (computerChoice <= 0.67) {
+                computerChoice = "paper";
+            } else {
+                computerChoice = "scissors";
+            }
+
+            document.getElementById("opponent").innerHTML = '// Your opponent chose' + ' ' + computerChoice + '.';
+
+            var compare = function (choice1, choice2) {
+                if (choice1 == choice2) {
+                    return "The result is a tie!";
+                } else if (choice1 == "rock") {
+                    if (choice2 == "scissors") {
+                        wins++;
+                        return "rock wins. rock on.";
+                    } else {
+                        loses++;
+                        return "sorry. paper wins.";
+                    }
+                } else if (choice1 == "paper") {
+                    if (choice2 == "rock") {
+                        wins++;
+                        return "paper wins";
+                    } else {
+                        loses++;
+                        return "sorry. scissors win.";
+                    }
+                } else if (choice1 == "scissors") {
+                    if (choice2 == "rock") {
+                        loses++;
+                        return "sorry. rock wins";
+                    } else {
+                        wins++;
+                        return "scissors win";
+                    }
+                } else if (choice1 == "rope") {
+                    wins++;
+                    return "rope FTW";
+                } else {
+                    return "error. bummer dude. game over. no dice.";
+                }
+            };
+
+            var winner = compare(userChoice, computerChoice);
+            document.getElementById("results").innerHTML = winner;
+            document.getElementById("wins").innerHTML = wins;
+            document.getElementById("loses").innerHTML = loses;
+
+            if (wins > 99 || loses > 99) {
+                document.getElementById("wins").style.fontSize = "44";
+                document.getElementById("loses").style.fontSize = "44";
+            }
+            if (wins > 999) {
+                alert("You reached the max score of 999. <br />Congratulations, you have no life.");
+            }
+            if (loses > 999) {
+                alert("Your opponent reached the max score of 999. <br />We're sorry, you have no life.");
+            }
+        };
+
+        var reset = function () {
+            loses = 0;
+            wins = 0;
+            document.getElementById("wins").innerHTML = wins;
+            document.getElementById("loses").innerHTML = loses;
+        };
+    </script>
+</body>
+
+</html>
